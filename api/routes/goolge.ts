@@ -14,7 +14,7 @@ googleRouter.get("/", async (c) => {
     scope
   )}&prompt=consent`;
   const sql = c.env.SQL;
-  let user = await sql`SELECT * FROM user`;
+  let user = await sql`SELECT * FROM users`;
   return Response.json({ message: authUrl, user: user });
 });
 
@@ -56,11 +56,11 @@ googleRouter.get("/callback", async (c) => {
     const { name, email } = userInfoResponse.data;
 
     const sql = c.env.SQL;
-    let user = await sql`SELECT * FROM user WHERE email = ${email}`;
+    let user = await sql`SELECT * FROM users WHERE email = ${email}`;
 
     if (user.length === 0) {
       user =
-        await sql`INSERT INTO user (full_name, email) VALUES (${name}, ${email}) RETURNING *`;
+        await sql`INSERT INTO users (full_name, email) VALUES (${name}, ${email}) RETURNING *`;
     }
     const userId = user[0].id;
     const token = await sign(
@@ -71,13 +71,11 @@ googleRouter.get("/callback", async (c) => {
     );
 
     // Step 4: Return token (or set it as a cookie if preferred)
-    return c.json({
+    return Response.json({
       message: "Login successful",
       token,
       user: { name, email },
     });
-
-    return Response.json({ name, email });
   } catch (error) {
     console.error("Error fetching user info:", error);
     return Response.json(
