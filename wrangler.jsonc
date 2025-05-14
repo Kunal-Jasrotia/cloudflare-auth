@@ -16,13 +16,13 @@
   },
   // Hyperdrive binding is optional - if not provided, app will use mock data
   // To enable Hyperdrive, uncomment and configure properly:
-    // "hyperdrive": [
-    //   {
-    //     "binding": "HYPERDRIVE",
-    //     "id": "YOUR_HYPERDRIVE_ID",
-    //     "localConnectionString": "postgresql://kunal:kunal_1309@cloudflare-auth.kjasrotia100.workers.dev:5432/mydatabase"
-    //   }
-    // ],
+    "hyperdrive": [
+      {
+        "binding": "HYPERDRIVE",
+        "id": "e45aa629c2b145d49635ede241c7fa3a",
+        "localConnectionString": "postgresql://avnadmin:AVNS__ztpMw-GyoYS3ew8MNJ@pg-3cfe90e8-kjasrotia100-5843.l.aivencloud.com:27413/defaultdb"
+      }
+    ],
   "placement": {
     "mode": "smart"
   },
