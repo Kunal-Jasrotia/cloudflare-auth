@@ -21,6 +21,7 @@ app.use("*", async (c, next) => {
       max: 5,
       fetch_types: false,
       ssl: true,
+      
     });
 
     c.env.SQL = sql;
