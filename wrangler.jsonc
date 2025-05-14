@@ -16,6 +16,7 @@
   },
   // Hyperdrive binding is optional - if not provided, app will use mock data
   // To enable Hyperdrive, uncomment and configure properly:
+
   "placement": {
     "mode": "smart"
   },
