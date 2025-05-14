@@ -14,9 +14,24 @@
     "binding": "ASSETS",
     "not_found_handling": "single-page-application"
   },
-
+  // Hyperdrive binding is optional - if not provided, app will use mock data
+  // To enable Hyperdrive, uncomment and configure properly:
+  // "hyperdrive": [
+  //   {
+  //     "binding": "HYPERDRIVE",
+  //     "id": "e45aa629c2b145d49635ede241c7fa3a",
+  //     "localConnectionString": "postgresql://avnadmin:AVNS__ztpMw-GyoYS3ew8MNJ@pg-3cfe90e8-kjasrotia100-5843.l.aivencloud.com:27413/defaultdb"
+  //   }
+  // ],
   "placement": {
     "mode": "smart"
   },
-  "upload_source_maps": true
+  "upload_source_maps": true,
+  "vars": {
+    "GOOGLE_REDIRECT_URI": "http://localhost:5173/api/google/callback",
+    "GOOGLE_CLIENT_ID": "931856379256-js8eapk6paahvlubp6ng4egckbf394iq.apps.googleusercontent.com",
+    "GOOGLE_CLIENT_SECRET": "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",
+    "JWT_SECRET": "345Rfgs345WEFf",
+    "DATABASE_URL": "postgresql://avnadmin:AVNS__ztpMw-GyoYS3ew8MNJ@pg-3cfe90e8-kjasrotia100-5843.l.aivencloud.com:27413/defaultdb?sslmode=disable"
+  }
 }

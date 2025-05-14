@@ -5,7 +5,7 @@ function App() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await fetch("/api/test");
+        const response = await fetch("/api/google");
         if (!response.ok) {
           throw new Error(`API returned status: ${response.status}`);
         }
