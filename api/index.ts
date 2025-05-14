@@ -1,10 +1,17 @@
 import { Hono } from "hono";
 import postgres from "postgres";
-import booksRouter from "./routes/books";
-import bookRelatedRouter from "./routes/book-related";
-import { mockBooks } from "./lib/mockData";
 
-const app = new Hono();
+interface Env {
+  Bindings: {
+    HYPERDRIVE: {
+      connectionString: string;
+    };
+    DB_AVAILABLE: boolean;
+    SQL: any;
+  };
+}
+
+const app = new Hono<Env>();
 
 // Setup SQL client middleware
 app.use("*", async (c, next) => {
@@ -27,26 +34,26 @@ app.use("*", async (c, next) => {
       c.executionCtx.waitUntil(sql.end());
     } catch (error) {
       console.error("Database connection error:", error);
-      c.env.DB_AVAILABLE = false;
-      c.env.MOCK_DATA = mockBooks;
-      await next();
+      return Response.json(
+        { error: "Database connection error" },
+        { status: 500 }
+      );
     }
   } else {
-    // No Hyperdrive binding available, use mock data
-    console.log("No database connection available. Using mock data.");
-    c.env.DB_AVAILABLE = false;
-    c.env.MOCK_DATA = mockBooks;
-    await next();
+    return Response.json(
+      { error: "Hyperdrive binding not found" },
+      { status: 500 }
+    );
   }
 });
+const Router = new Hono();
 
-app.route("/api/books", booksRouter);
-app.route("/api/books/:id/related", bookRelatedRouter);
-
-// Catch-all route for static assets
-app.all("*", async (c) => {
-  return c.env.ASSETS.fetch(c.req.raw);
+Router.get("/test", async (c) => {
+  return Response.json({
+    message: "API is running",
+  });
 });
+app.route("/api", Router);
 
 export default {
   fetch: app.fetch,
