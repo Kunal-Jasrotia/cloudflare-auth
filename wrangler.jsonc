@@ -20,7 +20,7 @@
     {
       "binding": "HYPERDRIVE",
       "id": "e45aa629c2b145d49635ede241c7fa3a",
-      "localConnectionString": "postgresql://avnadmin:AVNS__ztpMw-GyoYS3ew8MNJ@pg-3cfe90e8-kjasrotia100-5843.l.aivencloud.com:27413/defaultdb"
+      "localConnectionString": "postgres://avnadmin:AVNS__ztpMw-GyoYS3ew8MNJ@pg-3cfe90e8-kjasrotia100-5843.l.aivencloud.com:27413/defaultdb?sslmode=require"
     }
   ],
   "placement": {

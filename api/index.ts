@@ -20,8 +20,6 @@ app.use("*", async (c, next) => {
     const sql = postgres(connectionString, {
       max: 5,
       fetch_types: false,
-      ssl: true,
-      
     });
 
     c.env.SQL = sql;
