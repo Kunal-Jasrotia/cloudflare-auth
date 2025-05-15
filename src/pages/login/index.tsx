@@ -47,6 +47,7 @@ const LoginPage = () => {
       const data = await res.json();
 
       if (!res.ok) {
+        setError(data.message || "Login failed");
         throw new Error(data.message || "Login failed");
       }
 

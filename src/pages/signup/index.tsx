@@ -59,6 +59,7 @@ const SignupPage = () => {
       const data = await res.json();
 
       if (!res.ok) {
+        setError(data.message || "Signup failed");
         throw new Error(data.message || "Signup failed");
       }
 
