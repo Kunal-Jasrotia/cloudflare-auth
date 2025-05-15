@@ -1,16 +1,19 @@
 import { Hono } from "hono";
 import { Env } from "../env";
+import jwtMiddleware from "../middleware/auth";
 
 const profileRouter = new Hono<Env>();
+profileRouter.use("*", jwtMiddleware);
 
 profileRouter.get("/", async (c) => {
   try {
     const user = c.get("user");
     const userId = user?.userId;
+    console.log(userId);
 
-    const query = c.env.DB.prepare("SELECT * FROM users where id = ?").bind(
-      userId
-    );
+    const query = c.env.DB.prepare(
+      "SELECT id, full_name, email,phone,date_of_birth FROM users where id = ?"
+    ).bind(userId);
 
     const { results } = await query.all();
 

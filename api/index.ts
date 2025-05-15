@@ -29,7 +29,6 @@ test.get("/test", (c) => {
 
 app.route("/api", test);
 app.route("/api/google", googleRouter);
-profileRouter.use("*", jwtMiddleware);
 app.route("/api/profile", profileRouter);
 app.route("/api/login", loginRouter);
 app.route("/api/signup", signupRouter);

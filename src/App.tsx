@@ -5,6 +5,7 @@ import Profile from "./pages/profile";
 import Google from "./pages/google";
 function App() {
   const token = localStorage.getItem("token");
+
   return (
     <BrowserRouter>
       <Routes>

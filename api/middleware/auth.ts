@@ -9,6 +9,8 @@ const jwtMiddleware = async (c, next) => {
   const token = authHeader.split(" ")[1];
   try {
     const payload = await verify(token, c.env.JWT_SECRET);
+    console.log(payload, "---=-==-=-=-=-=", token, c.env.JWT_SECRET);
+
     c.set("user", payload);
     await next();
   } catch (err) {

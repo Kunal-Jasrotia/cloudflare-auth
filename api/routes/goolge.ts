@@ -14,11 +14,10 @@ googleRouter.get("/", async (c) => {
     scope
   )}&prompt=consent`;
 
-  const user = await c.env.DB.prepare("SELECT * FROM users").first<{
-    id: string;
-  }>();
-
-  return Response.json({ message: authUrl, user: user });
+  return Response.json(
+    { message: "Url fetched", url: authUrl },
+    { status: 200 }
+  );
 });
 
 googleRouter.get("/callback", async (c) => {
@@ -64,14 +63,14 @@ googleRouter.get("/callback", async (c) => {
 
     if (!user?.id) {
       user = (await c.env.DB.prepare(
-        "INSERT INTO users (full_name, email, oauth_used) VALUES (?, ?,?) RETURNING id"
+        "INSERT INTO users (full_name, email) VALUES (?, ?) RETURNING id"
       )
-        .bind(name, email, true)
+        .bind(name, email)
         .first<{ id: string }>()) as { id: string };
     }
-    console.log(user);
+    console.log(user, "234234234234");
 
-    const userId = user[0]?.id;
+    const userId = user.id;
     const token = await sign(
       {
         userId,
