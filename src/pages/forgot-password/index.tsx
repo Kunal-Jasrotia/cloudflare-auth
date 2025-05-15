@@ -8,27 +8,47 @@ const ForgotPasswordPage = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleEmailSubmit = () => {
+  const handleEmailSubmit = async () => {
     if (!email) return;
-    // Call backend to send OTP
-    console.log("Send OTP to:", email);
+    const res = await fetch("/api/forget-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.message || "Something went wrong");
+      return;
+    }
+
     setStep(2);
   };
 
-  const handleOtpSubmit = () => {
-    if (!otp) return;
-    // Verify OTP with backend
-    console.log("Verify OTP:", otp);
-    setStep(3);
-  };
+  const handleOtpAndPasswordSubmit = async () => {
+    if (!otp || !newPassword || !confirmPassword) {
+      alert("Please fill all fields");
+      return;
+    }
 
-  const handlePasswordReset = () => {
     if (newPassword !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
-    // Call backend to reset password
-    console.log("Reset password for:", email, newPassword);
+
+    const res = await fetch("/api/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp, new_password: newPassword }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Failed to reset password");
+      return;
+    }
+
     alert("Password changed successfully");
     window.location.href = "/login";
   };
@@ -92,22 +112,6 @@ const ForgotPasswordPage = () => {
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
             />
-            <Button
-              fullWidth
-              onClick={handleOtpSubmit}
-              sx={{
-                gridColumn: "span 4",
-                backgroundColor: "primary.main",
-                color: "black",
-              }}
-            >
-              Verify OTP
-            </Button>
-          </>
-        )}
-
-        {step === 3 && (
-          <>
             <TextField
               label="New Password"
               type="password"
@@ -126,14 +130,14 @@ const ForgotPasswordPage = () => {
             />
             <Button
               fullWidth
-              onClick={handlePasswordReset}
+              onClick={handleOtpAndPasswordSubmit}
               sx={{
                 gridColumn: "span 4",
                 backgroundColor: "primary.main",
                 color: "black",
               }}
             >
-              Reset Password
+              Verify OTP & Reset Password
             </Button>
           </>
         )}
