@@ -60,7 +60,7 @@ googleRouter.get("/callback", async (c) => {
 
     if (user.length === 0) {
       user =
-        await sql`INSERT INTO users (full_name, email) VALUES (${name}, ${email}) RETURNING *`;
+        await sql`INSERT INTO users (full_name, email,oauth_used) VALUES (${name}, ${email},${true}) RETURNING *`;
     }
     const userId = user[0].id;
     const token = await sign(
