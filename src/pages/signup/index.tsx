@@ -13,10 +13,19 @@ const SignupPage = () => {
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm((prev) => {
+      const updatedForm = { ...prev, [name]: value };
+      if (name === "password" || name === "confirm_password") {
+        setPasswordsMatch(
+          updatedForm.password === updatedForm.confirm_password
+        );
+      }
+      return updatedForm;
+    });
   };
 
   const handleSubmit = async () => {
@@ -27,7 +36,7 @@ const SignupPage = () => {
       return setError("Please fill all required fields.");
     }
 
-    if (password !== confirm_password) {
+    if (!passwordsMatch) {
       return setError("Passwords do not match.");
     }
 
@@ -132,6 +141,12 @@ const SignupPage = () => {
           value={form.confirm_password}
           onChange={handleChange}
           required
+          error={!passwordsMatch && form.confirm_password !== ""}
+          helperText={
+            !passwordsMatch && form.confirm_password !== ""
+              ? "Passwords do not match"
+              : ""
+          }
           sx={{ gridColumn: "span 4" }}
         />
         <TextField

@@ -7,6 +7,7 @@ const ForgotPasswordPage = () => {
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
 
   const handleEmailSubmit = async () => {
     if (!email) return;
@@ -36,7 +37,7 @@ const ForgotPasswordPage = () => {
       return;
     }
 
-    const res = await fetch("/api/verify", {
+    const res = await fetch("/api/forget-password/verify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, otp, new_password: newPassword }),
@@ -51,6 +52,12 @@ const ForgotPasswordPage = () => {
 
     alert("Password changed successfully");
     window.location.href = "/login";
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+    setPasswordsMatch(value === newPassword);
   };
 
   return (
@@ -118,7 +125,10 @@ const ForgotPasswordPage = () => {
               fullWidth
               sx={{ gridColumn: "span 4" }}
               value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              onChange={(e) => {
+                setNewPassword(e.target.value);
+                setPasswordsMatch(e.target.value === confirmPassword);
+              }}
             />
             <TextField
               label="Confirm New Password"
@@ -126,7 +136,13 @@ const ForgotPasswordPage = () => {
               fullWidth
               sx={{ gridColumn: "span 4" }}
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={handleConfirmPasswordChange}
+              error={!passwordsMatch && confirmPassword !== ""}
+              helperText={
+                !passwordsMatch && confirmPassword !== ""
+                  ? "Passwords do not match"
+                  : ""
+              }
             />
             <Button
               fullWidth
