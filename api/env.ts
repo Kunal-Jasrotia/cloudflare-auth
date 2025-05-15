@@ -7,6 +7,6 @@ export interface Env {
     GOOGLE_CLIENT_SECRET: string;
     JWT_SECRET: string;
     DB: D1Database;
-    RESEND_API_KEY: string;
+    MAILGUN_API_KEY: string;
   };
 }

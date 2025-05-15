@@ -39,7 +39,7 @@ forgotPasswordRouter.post("/", async (c) => {
 
     // TODO: Send OTP via email or SMS (console.log for now)
     if (user.email) {
-      await sendOtpEmail(user.email, otp);
+      await sendOtpEmail(user.email, otp, c.env.MAILGUN_API_KEY);
 
       // integrate email sending here
     }

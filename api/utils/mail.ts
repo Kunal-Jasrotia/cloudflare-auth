@@ -1,6 +1,5 @@
-export async function sendOtpEmail(to: string, otp: string) {
+export async function sendOtpEmail(to: string, otp: string, apiKey: string) {
   const domain = "sandbox476938a25f664667806eabd1666a8c15.mailgun.org";
-  const apiKey = "8541062c0fda3ede51a63d0a480e52df-e71583bb-a6776353";
 
   const auth = btoa(`api:${apiKey}`);
 

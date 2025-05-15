@@ -36,6 +36,6 @@
     "GOOGLE_CLIENT_ID": "931856379256-js8eapk6paahvlubp6ng4egckbf394iq.apps.googleusercontent.com",
     "GOOGLE_CLIENT_SECRET": "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",
     "JWT_SECRET": "345Rfgs345WEFf",
-    "RESEND_API_KEY": "re_A6bEpNpw_KGyM6kWoMV5tvS91dG7mHpzJ"
+    "MAILGUN_API_KEY": "8541062c0fda3ede51a63d0a480e52df-e71583bb-a6776353"
   }
 }
