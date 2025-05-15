@@ -24,7 +24,6 @@ googleRouter.get("/callback", async (c) => {
   const { code } = c.req.query();
 
   if (!code) return Response.json({ error: "Missing code" }, { status: 400 });
-  console.log(code);
 
   try {
     // Exchange code for access token
@@ -68,7 +67,6 @@ googleRouter.get("/callback", async (c) => {
         .bind(name, email)
         .first<{ id: string }>()) as { id: string };
     }
-    console.log(user, "234234234234");
 
     const userId = user.id;
     const token = await sign(

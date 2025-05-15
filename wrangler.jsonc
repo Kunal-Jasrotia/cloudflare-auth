@@ -27,7 +27,7 @@
   "kv_namespaces": [
     {
       "binding": "AUTH_STORAGE",
-      "id": "````````````````````2af0099fdd3049dd9ccd26ff31bd74fa````````````````````"
+      "id": "2af0099fdd3049dd9ccd26ff31bd74fa"
     }
   ],
   "upload_source_maps": true,
