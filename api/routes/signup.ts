@@ -22,7 +22,7 @@ signupRouter.post("/", async (c) => {
 
     if (existingUser) {
       return c.json(
-        { error: "User already exists please login" },
+        { message: "User already exists please login" },
         { status: 409 }
       );
     }

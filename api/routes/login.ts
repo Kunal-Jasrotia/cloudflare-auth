@@ -12,7 +12,7 @@ loginRouter.post("/", async (c) => {
 
     if ((!email && !phone) || !password) {
       return c.json(
-        { error: "Email or phone and password are required" },
+        { message: "Email or phone and password are required" },
         { status: 400 }
       );
     }
