@@ -1,16 +1,12 @@
-import postgres from "postgres";
+import { D1Database } from "@cloudflare/workers-types";
 
 export interface Env {
   Bindings: {
-    HYPERDRIVE: {
-      connectionString: string;
-    };
     GOOGLE_REDIRECT_URI: string;
     GOOGLE_CLIENT_ID: string;
     GOOGLE_CLIENT_SECRET: string;
     JWT_SECRET: string;
-    SQL: postgres.Sql<{}>;
-    DB_AVAILABLE: boolean;
-    DATABASE_URL: string;
+    DB: D1Database;
+    RESEND_API_KEY: string;
   };
 }

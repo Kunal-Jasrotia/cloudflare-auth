@@ -1,0 +1,15 @@
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  full_name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  password TEXT NOT NULL,
+  date_of_birth DATE
+);
+
+CREATE TABLE password_otps (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  otp VARCHAR(6) NOT NULL,
+  expires_at DATETIME NOT NULL
+);

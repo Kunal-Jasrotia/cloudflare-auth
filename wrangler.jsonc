@@ -14,23 +14,28 @@
     "binding": "ASSETS",
     "not_found_handling": "single-page-application"
   },
-  // Hyperdrive binding is optional - if not provided, app will use mock data
-  // To enable Hyperdrive, uncomment and configure properly:
-  "hyperdrive": [
-    {
-      "binding": "HYPERDRIVE",
-      "id": "e45aa629c2b145d49635ede241c7fa3a",
-      "localConnectionString": "postgres://avnadmin:AVNS__ztpMw-GyoYS3ew8MNJ@pg-3cfe90e8-kjasrotia100-5843.l.aivencloud.com:27413/defaultdb?sslmode=require"
-    }
-  ],
   "placement": {
     "mode": "smart"
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "auth-db",
+      "database_id": "912c59ce-e645-44f4-9d33-5eba1f60b3e9"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "AUTH_STORAGE",
+      "id": "````````````````````2af0099fdd3049dd9ccd26ff31bd74fa````````````````````"
+    }
+  ],
   "upload_source_maps": true,
   "vars": {
-    "GOOGLE_REDIRECT_URI": "https://cloudflare-auth.kjasrotia100.workers.dev/api/google/callback",
+    "GOOGLE_REDIRECT_URI": "http://localhost:5173/google",
     "GOOGLE_CLIENT_ID": "931856379256-js8eapk6paahvlubp6ng4egckbf394iq.apps.googleusercontent.com",
     "GOOGLE_CLIENT_SECRET": "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",
-    "JWT_SECRET": "345Rfgs345WEFf"
+    "JWT_SECRET": "345Rfgs345WEFf",
+    "RESEND_API_KEY": "re_A6bEpNpw_KGyM6kWoMV5tvS91dG7mHpzJ"
   }
 }

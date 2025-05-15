@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.0.8",
+    "@cloudflare/workers-types": "^4.20250515.0",
     "@eslint/js": "9.25.1",
     "@neondatabase/serverless": "0.10.4",
     "@types/node": "22.14.1",

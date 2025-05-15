@@ -1,30 +1,19 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router";
+import Login from "./pages/login";
+import Singup from "./pages/singup";
+import Profile from "./pages/profile";
+import Google from "./pages/google";
 function App() {
-  const [data, setData] = useState("");
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await fetch("/api/google");
-        if (!response.ok) {
-          throw new Error(`API returned status: ${response.status}`);
-        }
-        const data: { message: string } = await response.json();
-        console.log(data);
-
-        setData(data.message);
-      } catch (error) {
-        console.error("Error fetching data:", error.message);
-      }
-    };
-    loadData();
-  }, []);
-
+  const token = localStorage.getItem("token");
   return (
-    <div>
-      <h1>Upp and running</h1>
-      {data && <p>{data}</p>}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Singup />} />
+        <Route path="/google" element={<Google />} />
+        <Route path="/" element={token ? <Profile /> : <Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

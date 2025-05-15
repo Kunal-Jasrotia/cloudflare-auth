@@ -9,7 +9,7 @@ const jwtMiddleware = async (c, next) => {
   const token = authHeader.split(" ")[1];
   try {
     const payload = await verify(token, c.env.JWT_SECRET);
-    c.req.set("user", payload);
+    c.set("user", payload);
     await next();
   } catch (err) {
     console.error("JWT error:", err);

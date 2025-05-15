@@ -13,8 +13,11 @@ googleRouter.get("/", async (c) => {
   }&redirect_uri=${c.env.GOOGLE_REDIRECT_URI}&scope=${encodeURIComponent(
     scope
   )}&prompt=consent`;
-  const sql = c.env.SQL;
-  let user = await sql`SELECT * FROM users`;
+
+  const user = await c.env.DB.prepare("SELECT * FROM users").first<{
+    id: string;
+  }>();
+
   return Response.json({ message: authUrl, user: user });
 });
 
@@ -55,14 +58,20 @@ googleRouter.get("/callback", async (c) => {
 
     const { name, email } = userInfoResponse.data;
 
-    const sql = c.env.SQL;
-    let user = await sql`SELECT * FROM users WHERE email = ${email}`;
+    let user = await c.env.DB.prepare("SELECT * FROM users WHERE email = ?")
+      .bind(email)
+      .first<{ id: string }>();
 
-    if (user.length === 0) {
-      user =
-        await sql`INSERT INTO users (full_name, email,oauth_used) VALUES (${name}, ${email},${true}) RETURNING *`;
+    if (!user?.id) {
+      user = (await c.env.DB.prepare(
+        "INSERT INTO users (full_name, email, oauth_used) VALUES (?, ?,?) RETURNING id"
+      )
+        .bind(name, email, true)
+        .first<{ id: string }>()) as { id: string };
     }
-    const userId = user[0].id;
+    console.log(user);
+
+    const userId = user[0]?.id;
     const token = await sign(
       {
         userId,
@@ -70,9 +79,7 @@ googleRouter.get("/callback", async (c) => {
       c.env.JWT_SECRET
     );
 
-    // Step 4: Return token (or set it as a cookie if preferred)
-
-    return Response.redirect(c.req.url + `?token=${token}`, 302);
+    return Response.json({ message: "User info fetched successfully", token });
   } catch (error) {
     console.error("Error fetching user info:", error);
     return Response.json(

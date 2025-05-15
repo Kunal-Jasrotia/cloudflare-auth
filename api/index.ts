@@ -1,46 +1,39 @@
 import { Hono } from "hono";
-import postgres from "postgres";
 import { jwt } from "hono/jwt";
 import { Env } from "./env";
 import googleRouter from "./routes/goolge";
+import profileRouter from "./routes/profile";
+import loginRouter from "./routes/login";
+import signupRouter from "./routes/signup";
+import forgotPasswordRouter from "./routes/forget-password";
+import jwtMiddleware from "./middleware/auth";
 
 const app = new Hono<Env>();
 
-// SQL client middleware
-app.use("*", async (c, next) => {
-  let connectionString =
-    c.env.HYPERDRIVE?.connectionString || c.env.DATABASE_URL;
+type UserPayload = {
+  userId: string;
+};
 
-  if (!connectionString) {
-    console.error("No database connection string provided");
-    return c.json({ error: "Database config missing" }, 500);
+declare module "hono" {
+  interface ContextVariableMap {
+    user: UserPayload;
   }
-
-  try {
-    const sql = postgres(connectionString, {
-      max: 5,
-      fetch_types: false,
-    });
-
-    c.env.SQL = sql;
-    c.env.DB_AVAILABLE = true;
-    await next();
-    c.executionCtx.waitUntil(sql.end());
-  } catch (error) {
-    console.error("Database connection error:", error);
-    return c.json({ error: "Database connection error" }, 500);
-  }
-});
+}
 
 // Public router (no auth)
-const publicRouter = new Hono();
+const test = new Hono();
 
-publicRouter.get("/test", (c) => {
+test.get("/test", (c) => {
   return c.json({ message: "API is running" });
 });
 
-app.route("/api", publicRouter);
+app.route("/api", test);
 app.route("/api/google", googleRouter);
+profileRouter.use("*", jwtMiddleware);
+app.route("/api/profile", profileRouter);
+app.route("/api/login", loginRouter);
+app.route("/api/signup", signupRouter);
+app.route("/api/forget-password", forgotPasswordRouter);
 
 export default {
   fetch: app.fetch,
