@@ -71,11 +71,8 @@ googleRouter.get("/callback", async (c) => {
     );
 
     // Step 4: Return token (or set it as a cookie if preferred)
-    return Response.json({
-      message: "Login successful",
-      token,
-      user: { name, email },
-    });
+
+    return Response.redirect(c.req.url + `?token=${token}`, 302);
   } catch (error) {
     console.error("Error fetching user info:", error);
     return Response.json(
