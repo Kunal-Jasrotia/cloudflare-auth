@@ -76,7 +76,7 @@ googleRouter.get("/callback", async (c) => {
   } catch (error) {
     console.error("Error fetching user info:", error);
     return Response.json(
-      { error: "Error fetching user info" },
+      { error: "Error fetching user info", message: error.message },
       { status: 500 }
     );
   }
