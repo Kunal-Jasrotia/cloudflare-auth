@@ -1,6 +1,6 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 
-const LoginPage = () => {
+const SignupPage = () => {
   return (
     <>
       <Box
@@ -15,16 +15,12 @@ const LoginPage = () => {
           boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <Box
-          sx={{
-            width: "100%",
-            textAlign: "center",
-          }}
-        >
+        <Box sx={{ width: "100%", textAlign: "center" }}>
           <Typography fontWeight="bold" fontSize="32px" color="black">
-            Login
+            Sign Up
           </Typography>
         </Box>
+
         <Box
           sx={{
             display: "grid",
@@ -34,13 +30,42 @@ const LoginPage = () => {
           }}
         >
           <TextField
-            label="Email or Phone"
+            label="Full Name"
+            name="full_name"
+            required
+            sx={{ gridColumn: "span 4" }}
+          />
+          <TextField
+            label="Email"
             name="email"
+            required
+            sx={{ gridColumn: "span 4" }}
+          />
+          <TextField
+            label="Phone"
+            name="phone"
+            required
             sx={{ gridColumn: "span 4" }}
           />
           <TextField
             label="Password"
+            name="password"
             type="password"
+            required
+            sx={{ gridColumn: "span 4" }}
+          />
+          <TextField
+            label="Confirm Password"
+            name="confirm_password"
+            type="password"
+            required
+            sx={{ gridColumn: "span 4" }}
+          />
+          <TextField
+            label="Date of Birth (optional)"
+            name="dob"
+            type="date"
+            InputLabelProps={{ shrink: true }}
             sx={{ gridColumn: "span 4" }}
           />
 
@@ -60,7 +85,7 @@ const LoginPage = () => {
                 color: "black",
               }}
             >
-              Login
+              Sign Up
             </Button>
             <Button
               fullWidth
@@ -72,48 +97,35 @@ const LoginPage = () => {
                 window.location.href = "/google";
               }}
             >
-              Login with Google
+              Sign Up with Google
             </Button>
           </Box>
 
-          <Box
+          <Typography
             sx={{
               gridColumn: "span 4",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              textAlign: "center",
               fontSize: "14px",
             }}
           >
-            <Typography
-              sx={{
-                color: "primary.main",
+            Already have an account?{" "}
+            <span
+              style={{
+                color: "#1976d2",
                 cursor: "pointer",
                 textDecoration: "underline",
               }}
               onClick={() => {
-                window.location.href = "/forgot-password";
+                window.location.href = "/login";
               }}
             >
-              Forgot Password?
-            </Typography>
-            <Typography
-              sx={{
-                color: "primary.main",
-                cursor: "pointer",
-                textDecoration: "underline",
-              }}
-              onClick={() => {
-                window.location.href = "/signup";
-              }}
-            >
-              Don't have an account? Sign up
-            </Typography>
-          </Box>
+              Login
+            </span>
+          </Typography>
         </Box>
       </Box>
     </>
   );
 };
 
-export default LoginPage;
+export default SignupPage;

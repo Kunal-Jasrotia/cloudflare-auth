@@ -18,7 +18,7 @@ signupRouter.post("/", async (c) => {
       "SELECT id FROM users WHERE email = ? OR phone = ?"
     )
       .bind(email, phone)
-      .first();
+      .first<{ id: number }>();
 
     if (existingUser) {
       return c.json(
